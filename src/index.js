@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors"
 import dotenv from "dotenv"
+
 import routesCategories from "./Routes/routesCategories.js";
 import routesCustomers from "./Routes/routesCustomers.js";
 import routesGames from "./Routes/routesGames.js";
@@ -18,7 +19,6 @@ app.use(routesRentals)
 
 
 const {PORT} = process.env
-
 app.listen(PORT, () => {
     console.log("servidor em pé na porta ", PORT)
 })
