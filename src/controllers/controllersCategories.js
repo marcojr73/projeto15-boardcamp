@@ -4,7 +4,7 @@ export async function insertCategories(req, res){
      const {name} = req.body
      const db = await connectDB()
 
-     const answer = await db.query(`INSERT INTO categories (name) VALUES ('${name}')`)
+     const answer = await db.query(`INSERT INTO categories (name) VALUES ($1)`, [name])
 
      res.sendStatus(201)
 }
