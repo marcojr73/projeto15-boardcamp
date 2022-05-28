@@ -18,7 +18,6 @@ export async function insertGames(req, res){
 
 export async function listGames(req, res){
     const {name} = req.query
-    
     try {
         const db = await connectDB()
         if(!name){
@@ -37,7 +36,7 @@ export async function listGames(req, res){
             `,[name + "%"])
             res.send(games.rows)
         }    
-
+        
     } catch (error) {
         console.log(error)
         res.send(error)

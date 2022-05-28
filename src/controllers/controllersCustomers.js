@@ -24,11 +24,21 @@ export async function insertCustomers(req, res){
 }
 
 export async function listCustomers(req, res){
-    const db = await connectDB()
 
+    const cpf = req.query.cpf
+    console.log(cpf)
     try {
-        const customers = await db.query('SELECT * FROM customers')
-        res.send(customers.rows)
+        const db = await connectDB()
+        if(!cpf){
+            const customers = await db.query('SELECT * FROM customers')
+            res.send(customers.rows)
+        } else {
+            const customers = await db.query(`
+                    SELECT * FROM customers
+                    WHERE customers.cpf LIKE $1
+                `, [cpf + "%"])
+            res.send(customers.rows)
+        }
     } catch (error) {
         console.log(error)
         res.senStatus(400)
@@ -37,5 +47,20 @@ export async function listCustomers(req, res){
 }
 
 export async function listCustomer(req, res){
-    
+    const {id} = req.params
+    try {
+        const db = await connectDB()
+        const user = await db.query(`
+        SELECT * FROM customers
+        WHERE id=$1;
+        `, [id])
+
+        if(user.rows.length === 0){
+            return res.senStatus(404)
+        }
+        
+        res.send(user.rows)
+    } catch (error) {
+        res.sendStatus(404)
+    }
 }
