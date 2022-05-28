@@ -1,6 +1,25 @@
 import connectDB from "../config/bank.js";
 
 export async function updateCustomer(req, res){
+
+    const {id} = req.params
+    const {name, phone, cpf, birthday} = req.body
+
+    try {
+        const db = await connectDB()
+        const update = db.query(`
+            UPDATE customers SET
+            name = $1,
+            phone = $2,
+            cpf = $3,
+            birthday = $4
+            WHERE id = $5;
+        `, [name, phone, cpf, birthday, id])
+        
+        res.senStatu(201)
+    } catch (error) {
+        res.send(error)
+    }
     
 }
 
@@ -58,7 +77,7 @@ export async function listCustomer(req, res){
         if(user.rows.length === 0){
             return res.senStatus(404)
         }
-        
+
         res.send(user.rows)
     } catch (error) {
         res.sendStatus(404)

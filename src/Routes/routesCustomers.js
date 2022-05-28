@@ -6,6 +6,6 @@ const routesCustomers = Router()
 routesCustomers.get("/customers", listCustomers)
 routesCustomers.get("/customers/:id", listCustomer)
 routesCustomers.post("/customers", insertCustomers)   
-routesCustomers.put("/customers:id", updateCustomer)
+routesCustomers.put("/customers/:id", updateCustomer)
 
 export default routesCustomers
