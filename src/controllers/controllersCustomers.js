@@ -2,10 +2,6 @@ import connectDB from "../config/bank.js";
 
 export async function updateCustomer(req, res){
     
-
-
-
-
 }
 
 export async function insertCustomers(req, res){

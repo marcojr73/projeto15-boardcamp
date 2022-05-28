@@ -17,11 +17,30 @@ export async function insertGames(req, res){
 }
 
 export async function listGames(req, res){
+    const {name} = req.query
+    
+    try {
+        const db = await connectDB()
+        if(!name){
+            const games = await db.query(`
+            SELECT games.*, categories.name AS "categoryName"
+            from games
+            JOIN categories ON games."categoryId" = categories.id;
+            `)
+            res.send(games.rows)
+        } else {
+            const games = await db.query(`
+            SELECT games.*, categories.name AS "categoryName"
+            from games
+            JOIN categories ON games."categoryId" = categories.id
+            WHERE games.name like $1;
+            `,[name + "%"])
+            res.send(games.rows)
+        }    
 
-    const db = await connectDB()
-
-    const games = await db.query('SELECT * FROM games')
-
-    res.send(games.rows)
-
+    } catch (error) {
+        console.log(error)
+        res.send(error)
+    }
+    
 }

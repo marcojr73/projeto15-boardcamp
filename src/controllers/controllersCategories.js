@@ -9,8 +9,6 @@ export async function insertCategories(req, res){
      res.sendStatus(201)
 }
 
-
-
 export async function listCategories(req, res){
      const db = await connectDB()
     
