@@ -3,6 +3,19 @@ import dayjs from "dayjs"
 
 export async function deleteRental(req, res) {
 
+    const {id} = req.params
+    
+    try {
+        const db = await connectDB()
+        const remove = await db.query(`
+            DELETE FROM rentals WHERE id=$1;
+            `, [id])
+            
+        res.sendStatus(200)
+    } catch (error) {
+        res.send(error)
+        console.log(error)
+    }
 }
 
 export async function insertRental(req, res) {
@@ -39,16 +52,16 @@ export async function listRentals(req, res) {
         const db = await connectDB()
 
         const answer = await db.query(`
-        select 
-        rentals.*, customers.name, games.name as "titleGame", 
-        games."categoryId", categories.name as "categoryName"   
-        from rentals
-        join customers
-        on rentals."customerId" = customers.id
-        join games
-        on rentals."gameId" = games.id
-        join categories
-        on games."categoryId" = categories.id;
+            select 
+            rentals.*, customers.name, games.name as "titleGame", 
+            games."categoryId", categories.name as "categoryName"   
+            from rentals
+            join customers
+            on rentals."customerId" = customers.id
+            join games
+            on rentals."gameId" = games.id
+            join categories
+            on games."categoryId" = categories.id;
         `)
 
         const objRentals = answer.rows.map(ans => {
