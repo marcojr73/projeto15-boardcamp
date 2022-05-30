@@ -79,21 +79,48 @@ export async function insertRentals(req, res) {
 
 export async function listRentals(req, res) {
 
+    const {customerId} = req.query
+    const {gameId} = req.query
+
+    let answer = []
+    const request = `select 
+    rentals.*, customers.name, games.name as "titleGame", 
+    games."categoryId", categories.name as "categoryName"   
+    from rentals
+    join customers
+    on rentals."customerId" = customers.id
+    join games
+    on rentals."gameId" = games.id
+    join categories
+    on games."categoryId" = categories.id`
+
     try {
         const db = await connectDB()
 
-        const answer = await db.query(`
-            select 
-            rentals.*, customers.name, games.name as "titleGame", 
-            games."categoryId", categories.name as "categoryName"   
-            from rentals
-            join customers
-            on rentals."customerId" = customers.id
-            join games
-            on rentals."gameId" = games.id
-            join categories
-            on games."categoryId" = categories.id;
+        if(customerId){
+            answer = await db.query(`
+            ${request}
+            WHERE "customerId" = $1;
+        `,[customerId])
+
+        } else {
+            answer = await db.query(`
+            ${request}
         `)
+        }
+
+        if(gameId){
+            answer = await db.query(`
+            ${request}
+            WHERE "gameId" = $1;
+        `,[gameId])
+
+        } else {
+            answer = await db.query(`
+            ${request}
+        `)
+        }
+        
 
         const objRentals = answer.rows.map(ans => {
             return(
@@ -122,6 +149,7 @@ export async function listRentals(req, res) {
         res.send(objRentals)
 
     } catch (error) {
+        console.log(error)
         res.send(error)
     }
 

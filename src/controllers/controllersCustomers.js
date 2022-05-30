@@ -26,7 +26,6 @@ export async function updateCustomer(req, res){
 export async function insertCustomers(req, res){
     const db = await connectDB()
     const {name, phone, cpf, birthday} = req.body
-    console.log(req.body)
 
     try {
         const insert = await db.query(
