@@ -9,7 +9,7 @@
 - E se pudéssemos alugar um filme ou jogo em uma LOCADORA? assim como faziam os maias, incas e astecas?
 - Esta é uma api de locadora, onde você pode registrar seus jogos e disponibizar para outras pessoas o alugarem
 
-- [Veja meu deploy na heroku aqui]()
+- [Veja meu deploy na heroku aqui](https://boardcamp-api.herokuapp.com)
 
 ***
 
