@@ -22,12 +22,6 @@ export default async function connectDB() {
     };
   }
   
-  if (process.env.MODE === "PROD") {
-    databaseConfig.ssl={
-      rejectUnauthorized:false
-    };
-  }
-
   const { Pool } = pg;
 
   const db = new Pool(connectionParams)
