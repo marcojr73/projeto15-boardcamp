@@ -5,9 +5,9 @@ import validateRental from "../middlewares/validateRental.js"
 
 const routesRentals = Router()
 
-routesRentals.get("/rentals",listRentals)
 routesRentals.post("/rentals", validateDataCustomer, insertRentals)
 routesRentals.post("/rentals/:id/return",validateRental, insertRental)
+routesRentals.get("/rentals",listRentals)
 routesRentals.delete("/rentals/:id",validateRental, deleteRental)
 
 

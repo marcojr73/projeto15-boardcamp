@@ -22,7 +22,6 @@ export async function deleteRental(req, res) {
 
 export async function insertRental(req, res) {
     const returnDate = dayjs().$d
-    // const returnDate = new Date("2022-06-02")
     let delayFee = null
     const {id} = req.params
 

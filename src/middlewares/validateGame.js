@@ -23,7 +23,7 @@ export default async function validateGame(req, res, next){
         
         if(availableCategorie.rows.length === 0){
             console.log("essa categori nn existe")
-            res.sendStatus(400)
+            return res.sendStatus(400)
         }
 
         const availableName = await db.query(`
@@ -31,7 +31,7 @@ export default async function validateGame(req, res, next){
         `,[name])
         
         if(availableName.rows.length > 0){
-            res.sendStatus(409)
+            return res.sendStatus(409)
         }
 
     } catch (error) {

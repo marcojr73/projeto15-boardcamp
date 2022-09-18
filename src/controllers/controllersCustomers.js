@@ -7,6 +7,7 @@ export async function updateCustomer(req, res){
 
     try {
         const db = await connectDB()
+
         const update = db.query(`
             UPDATE customers SET
             name = $1,
@@ -28,6 +29,13 @@ export async function insertCustomers(req, res){
     const {name, phone, cpf, birthday} = req.body
 
     try {
+        const available = await db.query(`
+            SELECT * FROM customers WHERE cpf=$1;
+        `,[cpf])
+
+        if(available.rows.length > 0){
+            return res.sendStatus(409)
+        }
         const insert = await db.query(
             `INSERT INTO customers (name, phone, cpf, birthday)
             VALUES ($1, $2, $3, $4)`, [name, phone, cpf, birthday]
@@ -44,7 +52,6 @@ export async function insertCustomers(req, res){
 export async function listCustomers(req, res){
 
     const cpf = req.query.cpf
-    console.log(cpf)
     try {
         const db = await connectDB()
         if(!cpf){

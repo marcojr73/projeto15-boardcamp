@@ -13,20 +13,10 @@ export default async function validateDataCustomer(req, res, next){
     })
 
     try {
-        const validate = await dataSchema.validateAsync(req.body)
-
-        const db = await connectDB()
-        
-        const available = await db.query(`
-            SELECT * FROM customers WHERE cpf=$1;
-        `,[cpf])
-
-        if(available.rows.length > 0){
-            res.sendStatus(409)
-        }
-
+        await dataSchema.validateAsync(req.body)
     } catch (error) {
         if(error.isJoi){
+            console.log(error)
             return res.sendStatus(400)
         }
     }

@@ -4,9 +4,9 @@ import validateDataCustomer from "../middlewares/validateDataCustomer.js";
 
 const routesCustomers = Router()
 
+routesCustomers.post("/customers", validateDataCustomer, insertCustomers)   
 routesCustomers.get("/customers", listCustomers)
 routesCustomers.get("/customers/:id", listCustomer)
-routesCustomers.post("/customers", validateDataCustomer, insertCustomers)   
 routesCustomers.put("/customers/:id", validateDataCustomer, updateCustomer)
 
 export default routesCustomers

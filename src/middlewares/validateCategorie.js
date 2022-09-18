@@ -16,13 +16,12 @@ export default async function validateCategorie(req, res, next){
         const unavailable = await db.query(`
             SELECT * FROM categories WHERE name=$1;
         `,[name])
-
-        if(unavailable){
-            res.sendStatus(409)
+        if(unavailable.rowCount !== 0){
+            return res.sendStatus(409)
         }
     } catch (error) {
         if(error.isJoi){
-            return res.sendStatus(400)
+            return res.sendStatus(422)
         }
     }
     next()
