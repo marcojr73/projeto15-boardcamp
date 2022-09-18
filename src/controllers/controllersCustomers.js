@@ -66,7 +66,7 @@ export async function listCustomers(req, res){
         }
     } catch (error) {
         console.log(error)
-        res.senStatus(400)
+        res.sendStatus(400)
     }
 
 }
